@@ -1,7 +1,7 @@
 'use client'
 import React, { createContext, useContext } from 'react';
 import { useMachine } from '@xstate/react';
-import { cartMachine } from '@/machines/shoppingCartMachines';
+import { cartMachine } from '@/machines/cartMachines';
 import { Product } from '@/types/product.types';
 
 interface CartProviderProps {
@@ -11,6 +11,7 @@ interface CartProviderProps {
 interface ICartContext {
     cart: Product[];
     addProduct: (product: Product) => void;
+    removeProduct: (productId: number) => void;
 }
 
 const CartContext = createContext<ICartContext | undefined>(undefined);
@@ -22,9 +23,14 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         send({ type: 'ADD_PRODUCT', product });
     };
 
+    const removeProduct = (productId: number) => {
+        send({ type: 'REMOVE_PRODUCT', productId });
+    };
+
     const value = {
         cart: state.context.cart,
         addProduct,
+        removeProduct,
     };
 
     return (

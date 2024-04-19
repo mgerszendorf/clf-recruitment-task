@@ -6,7 +6,8 @@ interface CartContext {
 }
 
 type CartEvent =
-    | { type: 'ADD_PRODUCT'; product: Product };
+    | { type: 'ADD_PRODUCT'; product: Product }
+    | { type: 'REMOVE_PRODUCT'; productId: number };
 
 export const cartMachine = createMachine<CartContext, CartEvent>({
     id: 'cartMachine',
@@ -20,6 +21,11 @@ export const cartMachine = createMachine<CartContext, CartEvent>({
                 ADD_PRODUCT: {
                     actions: assign({
                         cart: (context, event) => [...context.cart, event.product]
+                    })
+                },
+                REMOVE_PRODUCT: {
+                    actions: assign({
+                        cart: (context, event) => context.cart.filter((product: Product) => product.id !== event.productId)
                     })
                 }
             }

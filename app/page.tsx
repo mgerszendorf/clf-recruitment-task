@@ -1,9 +1,8 @@
-import { MainPage } from "@/pages/MainPage";
-import styles from './page.module.scss'
+import MainPage from '@/pages/MainPage';
 
 export default function Home() {
   return (
-    <main className={styles.main}>
+    <main>
       <MainPage />
     </main>
   );

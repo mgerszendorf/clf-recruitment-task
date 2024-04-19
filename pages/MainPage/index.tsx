@@ -2,7 +2,7 @@ import { NavBar } from '@/components/NavBar';
 import styles from './style.module.scss';
 import { AllProducts } from '@/components/AllProducts';
 
-export const MainPage = () => {
+const MainPage = () => {
     return (
         <div className={styles.mainPage}>
             <NavBar />
@@ -10,3 +10,5 @@ export const MainPage = () => {
         </div>
     );
 }
+
+export default MainPage

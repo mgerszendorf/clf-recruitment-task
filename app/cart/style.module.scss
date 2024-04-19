@@ -1,0 +1,53 @@
+@import "../../assets/styles/abstracts/variables";
+
+.cartContainer {
+    padding: 1rem 2rem 2rem 2rem;
+
+    .yourCart {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h1 {
+            font-size: 26px;
+            margin: 0 40px 0 0;
+        }
+    }
+
+    .nextStepContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 50px;
+    }
+}
+
+.emptyCart {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .removeShoppingCartIcon {
+        font-size: 80px;
+        color: $gray;
+    }
+
+    p {
+        font-size: 1.8rem;
+    }
+
+}
+
+@media all and (min-width: 1024px) {
+    .cartContainer {
+        .yourCart {
+            justify-content: flex-start;
+
+            h1 {
+                font-size: 34px;
+            }
+        }
+    }
+}

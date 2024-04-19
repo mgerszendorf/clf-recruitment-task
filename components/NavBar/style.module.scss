@@ -1,0 +1,34 @@
+@import "../../assets/styles/abstracts/variables";
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+
+    div {
+        .logo {
+            font-weight: 500;
+            font-size: 24px;
+        }
+    }
+
+    button {
+        p {
+            margin-right: 10px;
+        }
+
+        .cartCount {
+            background-color: $red;
+            color: $white;
+            border-radius: 50%;
+            padding: 0 6px;
+            font-size: 0.75rem;
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform: translate(50%, -50%);
+        }
+
+    }
+}

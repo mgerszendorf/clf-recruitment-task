@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import '../assets/styles/globales.scss';
+import { CartProvider } from "@/contexts/CartContext";
 
 export const metadata: Metadata = {
   title: "CLF - Recruitment task",
@@ -12,7 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <CartProvider>
+          {children}
+        </CartProvider>
+      </body>
     </html>
   );
 }

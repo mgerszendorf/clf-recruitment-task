@@ -7,12 +7,16 @@ import { useCart } from '@/contexts/CartContext';
 import Link from 'next/link';
 
 export const NavBar = () => {
-    const { cart } = useCart();
+    const { cart, goBack } = useCart();
+
+    const handleLogoClick = () => {
+        goBack('home');
+    };
 
     return (
         <header className={styles.header}>
             <div>
-                <Link href="/" passHref className={styles.link}>
+                <Link href="/" passHref className={styles.link} onClick={handleLogoClick}>
                     <p className={styles.logo}>LOGO</p>
                 </Link>
             </div>

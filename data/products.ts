@@ -105,7 +105,7 @@ export const products: Product[] = [
     },
     {
         id: 18,
-        name: "Szybko i wolno",
+        name: "Mysz Logitech A123",
         price: 20,
         requiresShipping: false
     },

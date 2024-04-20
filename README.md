@@ -19,6 +19,9 @@ cd clf-recruitment-task
 yarn install
 ```
 
+### 3. Create a .env file:
+Copy the .env.example file in the main directory and rename it to .env. Update the variables in .env as necessary for your local environment.
+
 ## Running the Application
 
 Run the application in development mode:

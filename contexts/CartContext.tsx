@@ -22,10 +22,11 @@ interface ICartContext {
     selectPayment: (payment: string) => void;
     skipPayment: () => void;
     completeOrder: () => void;
-    goBack: (from: string) => void;
+    goBack: () => void;
+    goBackToHome: () => void;
 }
 
-const CartContext = createContext<ICartContext | undefined>(undefined);
+const CartContext = createContext<ICartContext>({} as ICartContext);
 
 export const CartProvider = ({ children }: CartProviderProps) => {
     const [state, send] = useMachine(cartMachine);
@@ -62,8 +63,12 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         send({ type: 'COMPLETE_ORDER' });
     };
 
-    const goBack = (from: string) => {
-        send({ type: 'GO_BACK', from });
+    const goBack = () => {
+        send({ type: 'GO_BACK' });
+    };
+
+    const goBackToHome = () => {
+        send({ type: 'GO_BACK_TO_HOME' });
     };
 
     const value = {
@@ -80,6 +85,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         skipPayment,
         completeOrder,
         goBack,
+        goBackToHome,
     };
 
     return (

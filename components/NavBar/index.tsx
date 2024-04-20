@@ -6,29 +6,39 @@ import { Button } from '@mui/material';
 import { useCart } from '@/contexts/CartContext';
 import Link from 'next/link';
 
-export const NavBar = () => {
-    const { cart, goBack } = useCart();
+interface NavBar {
+    hideCartButton: boolean;
+    blockCallLogoFunction: boolean;
+}
+
+export const NavBar = ({ hideCartButton, blockCallLogoFunction }: NavBar) => {
+    const { cart, goBackToHome } = useCart();
 
     const handleLogoClick = () => {
-        goBack('home');
+        goBackToHome();
     };
 
     return (
         <header className={styles.header}>
             <div>
-                <Link href="/" passHref className={styles.link} onClick={handleLogoClick}>
+                {!blockCallLogoFunction ?
+                    <Link href="/" passHref className={styles.link} onClick={handleLogoClick}>
+                        <p className={styles.logo}>LOGO</p>
+                    </Link> :
                     <p className={styles.logo}>LOGO</p>
-                </Link>
+                }
             </div>
-            <Link href="/cart" passHref>
-                <Button variant="contained">
-                    <p>Koszyk</p>
-                    <ShoppingCartIcon />
-                    {cart.length > 0 &&
-                        <span className={styles.cartCount}>{cart.length}</span>
-                    }
-                </Button>
-            </Link>
+            {hideCartButton &&
+                <Link href="/cart" passHref>
+                    <Button variant="contained">
+                        <p>Koszyk</p>
+                        <ShoppingCartIcon />
+                        {cart.length > 0 &&
+                            <span className={styles.cartCount}>{cart.length}</span>
+                        }
+                    </Button>
+                </Link>
+            }
         </header>
     );
 }

@@ -7,7 +7,7 @@ import { useState } from "react";
 import styles from './style.module.scss';
 
 export const AddressForm = () => {
-    const { addAddress } = useCart();
+    const { addAddress, goBack } = useCart();
     const [addressData, setAddressData] = useState<Address>({ street: '', city: '', country: 'Polska' });
 
     const handleChange = (event: SelectChangeEvent) => {
@@ -31,6 +31,10 @@ export const AddressForm = () => {
             country: addressData.country
         });
     };
+
+    const handleBack = () => {
+        goBack()
+    }
 
     const isFormComplete = addressData.street && addressData.city && addressData.country;
 
@@ -74,6 +78,11 @@ export const AddressForm = () => {
                     </Select>
                 </FormControl>
                 <Box className={styles.buttonsContainer}>
+                    <Link href="/cart" passHref>
+                        <Button onClick={handleBack} type="submit" variant="outlined">
+                            Wstecz
+                        </Button>
+                    </Link>
                     <Link href="/cart/shipping" passHref>
                         <Button onClick={handleSubmit} type="submit" variant="contained" color="primary" disabled={!isFormComplete}>
                             Dalej

@@ -3,13 +3,16 @@
 
     .buttonsContainer {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         margin-top: 20px;
 
-        a {
-            &:nth-of-type(1) {
-                margin-right: 15px;
+        div {
+            a {
+                &:nth-of-type(1) {
+                    margin-right: 15px;
+                }
             }
         }
+
     }
 }

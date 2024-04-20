@@ -6,7 +6,7 @@ import { AddressForm } from '@/components/AddressForm';
 const AddressFormPage = () => {
     return (
         <>
-            <NavBar />
+            <NavBar hideCartButton={false} blockCallLogoFunction={false} />
             <AddressForm />
         </>
     );

@@ -18,7 +18,8 @@ type CartEvent =
     | { type: 'SELECT_PAYMENT'; payment: string }
     | { type: 'SKIP_PAYMENT' }
     | { type: 'COMPLETE_ORDER' }
-    | { type: 'GO_BACK'; from: string };
+    | { type: 'GO_BACK_TO_HOME' }
+    | { type: 'GO_BACK' }
 
 export const cartMachine = createMachine<CartContext, CartEvent>({
     id: 'cartMachine',
@@ -29,26 +30,43 @@ export const cartMachine = createMachine<CartContext, CartEvent>({
         shipping: undefined,
         payment: undefined,
     },
+    predictableActionArguments: true,
     states: {
         cart: {
             on: {
                 ADD_PRODUCT: {
                     actions: assign({
-                        cart: (context, event) => [...context.cart, event.product]
-                    })
+                        cart: (context, event) => [...context.cart, event.product],
+                    }),
                 },
                 REMOVE_PRODUCT: {
                     actions: assign({
-                        cart: (context, event) => context.cart.filter(product => product.id !== event.productId)
-                    })
+                        cart: (context, event) => context.cart.filter((product) => product.id !== event.productId),
+                    }),
                 },
                 ADD_ADDRESS: {
                     target: 'addressed',
                     actions: assign({
                         address: (_, event) => event.address,
                     }),
-                }
-            }
+                },
+                GO_BACK: {
+                    actions: assign({
+                        address: (_) => undefined,
+                        shipping: (_) => undefined,
+                        payment: (_) => undefined,
+                    }),
+                },
+                GO_BACK_TO_HOME: {
+                    target: 'cart',
+                    actions: assign({
+                        cart: (_) => [],
+                        address: (_) => undefined,
+                        shipping: (_) => undefined,
+                        payment: (_) => undefined,
+                    }),
+                },
+            },
         },
         addressed: {
             on: {
@@ -56,12 +74,30 @@ export const cartMachine = createMachine<CartContext, CartEvent>({
                     target: 'shipping_selected',
                     actions: assign({
                         shipping: (_, event) => event.shipping,
-                    })
+                    }),
                 },
                 SKIP_SHIPPING: {
-                    target: 'payment_selected'
-                }
-            }
+                    target: 'shipping_skipped',
+                    actions: assign({
+                        shipping: (_) => undefined,
+                    }),
+                },
+                GO_BACK: {
+                    target: 'cart',
+                    actions: assign({
+                        address: (_) => undefined,
+                    }),
+                },
+                GO_BACK_TO_HOME: {
+                    target: 'cart',
+                    actions: assign({
+                        cart: (_) => [],
+                        address: (_) => undefined,
+                        shipping: (_) => undefined,
+                        payment: (_) => undefined,
+                    }),
+                },
+            },
         },
         shipping_selected: {
             on: {
@@ -69,32 +105,110 @@ export const cartMachine = createMachine<CartContext, CartEvent>({
                     target: 'payment_selected',
                     actions: assign({
                         payment: (_, event) => event.payment,
-                    })
+                    }),
                 },
                 SKIP_PAYMENT: {
-                    target: 'completed'
-                }
-            }
-        },
-        payment_selected: {
-            on: {
-                COMPLETE_ORDER: {
-                    target: 'completed'
-                }
-            }
-        },
-        completed: {
-            type: 'final',
-            on: {
+                    target: 'completed',
+                    actions: assign({
+                        payment: (_) => undefined,
+                    }),
+                },
                 GO_BACK: {
+                    target: 'addressed',
+                    actions: assign({
+                        shipping: (_) => undefined,
+                    }),
+                },
+                GO_BACK_TO_HOME: {
                     target: 'cart',
                     actions: assign({
+                        cart: (_) => [],
                         address: (_) => undefined,
                         shipping: (_) => undefined,
                         payment: (_) => undefined,
                     }),
-                }
-            }
-        }
-    }
+                },
+            },
+        },
+        shipping_skipped: {
+            on: {
+                SELECT_PAYMENT: {
+                    target: 'payment_selected',
+                    actions: assign({
+                        payment: (_, event) => event.payment,
+                    }),
+                },
+                SKIP_PAYMENT: {
+                    target: 'completed',
+                    actions: assign({
+                        payment: (_) => undefined,
+                    }),
+                },
+                GO_BACK: {
+                    target: 'addressed',
+                    actions: assign({
+                        shipping: (_) => undefined,
+                    }),
+                },
+                GO_BACK_TO_HOME: {
+                    target: 'cart',
+                    actions: assign({
+                        cart: (_) => [],
+                        address: (_) => undefined,
+                        shipping: (_) => undefined,
+                        payment: (_) => undefined,
+                    }),
+                },
+            },
+        },
+        payment_selected: {
+            on: {
+                COMPLETE_ORDER: {
+                    target: 'completed',
+                },
+                GO_BACK: {
+                    target: 'shipping_selected',
+                    actions: assign({
+                        payment: (_) => undefined,
+                    }),
+                },
+                GO_BACK_TO_HOME: {
+                    target: 'cart',
+                    actions: assign({
+                        cart: (_) => [],
+                        address: (_) => undefined,
+                        shipping: (_) => undefined,
+                        payment: (_) => undefined,
+                    }),
+                },
+            },
+        },
+        payment_skipped: {
+            on: {
+                COMPLETE_ORDER: {
+                    target: 'completed',
+                },
+                GO_BACK: {
+                    target: 'shipping_selected',
+                    actions: assign({
+                        payment: (_) => undefined,
+                    }),
+                },
+                GO_BACK_TO_HOME: {
+                    target: 'cart',
+                    actions: assign({
+                        cart: (_) => [],
+                        address: (_) => undefined,
+                        shipping: (_) => undefined,
+                        payment: (_) => undefined,
+                    }),
+                },
+            },
+        },
+
+        completed: {
+            type: 'final',
+        },
+    },
 });
+

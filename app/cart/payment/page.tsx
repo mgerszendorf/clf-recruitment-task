@@ -6,7 +6,7 @@ import { PaymentForm } from '@/components/PaymentForm';
 const PaymentFormPage = () => {
     return (
         <>
-            <NavBar />
+            <NavBar hideCartButton={false} blockCallLogoFunction={false} />
             <PaymentForm />
         </>
     );

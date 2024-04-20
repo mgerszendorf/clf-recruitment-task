@@ -7,7 +7,7 @@ import Link from 'next/link';
 import styles from './style.module.scss';
 
 export const ShippingForm = () => {
-    const { selectShipping, skipShipping, address } = useCart();
+    const { selectShipping, skipShipping, goBack, address } = useCart();
     const [shippingMethod, setShippingMethod] = useState<string>('');
 
     const handleChange = (event: SelectChangeEvent) => {
@@ -20,6 +20,10 @@ export const ShippingForm = () => {
 
     const handleSkip = () => {
         skipShipping();
+    }
+
+    const handleBack = () => {
+        goBack()
     }
 
     const shippingChoices = address ? getShippingOptions(address.country) : [];
@@ -46,16 +50,23 @@ export const ShippingForm = () => {
                     </Select>
                 </FormControl>
                 <Box className={styles.buttonsContainer}>
-                    <Link href="/cart/payment" passHref>
-                        <Button onClick={handleSkip} variant="contained" color="primary">
-                            Pomiń
+                    <Link href="/cart/address" passHref>
+                        <Button onClick={handleBack} variant="outlined">
+                            Wstecz
                         </Button>
                     </Link>
-                    <Link href="/cart/payment" passHref>
-                        <Button onClick={handleSubmit} variant="contained" color="primary" disabled={!shippingMethod}>
-                            Dalej
-                        </Button>
-                    </Link>
+                    <Box>
+                        <Link href="/cart/payment" passHref>
+                            <Button onClick={handleSkip} variant="contained" color="primary">
+                                Pomiń
+                            </Button>
+                        </Link>
+                        <Link href="/cart/payment" passHref>
+                            <Button onClick={handleSubmit} variant="contained" color="primary" disabled={!shippingMethod}>
+                                Dalej
+                            </Button>
+                        </Link>
+                    </Box>
                 </Box>
             </Container>
         </div>

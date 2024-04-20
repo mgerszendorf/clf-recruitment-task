@@ -6,7 +6,7 @@ import { ShippingForm } from '@/components/ShippingForm';
 const ShippingFormPage = () => {
     return (
         <>
-            <NavBar />
+            <NavBar hideCartButton={false} blockCallLogoFunction={false} />
             <ShippingForm />
         </>
     );

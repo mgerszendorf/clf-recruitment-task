@@ -20,7 +20,7 @@ const CartPage = () => {
 
     return (
         <div>
-            <NavBar />
+            <NavBar hideCartButton={true} blockCallLogoFunction={false} />
             <Box className={styles.cartContainer}>
                 <Box className={styles.yourCart}>
                     <Typography variant="h4" component="h1" gutterBottom>

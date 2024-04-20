@@ -7,7 +7,7 @@ import Link from 'next/link';
 import styles from './style.module.scss';
 
 export const PaymentForm = () => {
-    const { selectPayment, skipPayment } = useCart();
+    const { selectPayment, skipPayment, goBack } = useCart();
     const [paymentMethod, setPaymentMethod] = useState('');
 
     const handleChange = (event: SelectChangeEvent) => {
@@ -20,6 +20,10 @@ export const PaymentForm = () => {
 
     const handleSkip = () => {
         skipPayment();
+    }
+
+    const handleBack = () => {
+        goBack();
     }
 
     return (
@@ -44,16 +48,23 @@ export const PaymentForm = () => {
                     </Select>
                 </FormControl>
                 <Box className={styles.buttonsContainer}>
-                    <Link href="/cart/summary" passHref>
-                        <Button onClick={handleSkip} variant="contained" color="primary">
-                            Pomiń
+                    <Link href="/cart/shipping" passHref>
+                        <Button onClick={handleBack} variant="outlined">
+                            Wstecz
                         </Button>
                     </Link>
-                    <Link href="/cart/summary" passHref>
-                        <Button onClick={handleSubmit} variant="contained" color="primary" disabled={!paymentMethod}>
-                            Dalej
-                        </Button>
-                    </Link>
+                    <Box>
+                        <Link href="/cart/summary" passHref>
+                            <Button onClick={handleSkip} variant="contained" color="primary">
+                                Pomiń
+                            </Button>
+                        </Link>
+                        <Link href="/cart/summary" passHref>
+                            <Button onClick={handleSubmit} variant="contained" color="primary" disabled={!paymentMethod}>
+                                Dalej
+                            </Button>
+                        </Link>
+                    </Box>
                 </Box>
             </Container>
         </div>

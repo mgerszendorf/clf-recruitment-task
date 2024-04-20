@@ -6,7 +6,7 @@ import { SummaryComponent } from '@/components/SummaryComponent';
 const SummaryPage = () => {
     return (
         <>
-            <NavBar />
+            <NavBar hideCartButton={false} blockCallLogoFunction={true} />
             <SummaryComponent />
         </>
     );

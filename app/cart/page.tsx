@@ -5,8 +5,9 @@ import { NavBar } from '@/components/NavBar';
 import { useCart } from '@/contexts/CartContext';
 import styles from './style.module.scss';
 import { Product } from '@/types/product.types';
-import AddProductModal from '@/components/AddProductModal.tsx';
+import { AddProductModal } from '@/components/AddProductModal';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
+import Link from 'next/link';
 
 const CartPage = () => {
     const { cart, removeProduct } = useCart();
@@ -53,9 +54,11 @@ const CartPage = () => {
                         <Typography variant="h6" component="p">
                             Suma: {totalSum} zł
                         </Typography>
-                        <Button variant="contained" disabled={cart.length === 0}>
-                            Przejdź dalej
-                        </Button>
+                        <Link href="/cart/address" passHref>
+                            <Button variant="contained" disabled={cart.length === 0}>
+                                Przejdź dalej
+                            </Button>
+                        </Link>
                     </Box>
                 }
             </Box>

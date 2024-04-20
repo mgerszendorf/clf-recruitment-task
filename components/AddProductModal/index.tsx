@@ -15,7 +15,7 @@ interface ProductFormState {
     requiresShipping: boolean;
 }
 
-const AddProductModal = ({ open, onClose }: AddProductModalProps) => {
+export const AddProductModal = ({ open, onClose }: AddProductModalProps) => {
     const { addProduct } = useCart();
     const [product, setProduct] = useState<ProductFormState>({ name: '', price: null, requiresShipping: false });
 
@@ -96,5 +96,3 @@ const AddProductModal = ({ open, onClose }: AddProductModalProps) => {
         </Modal>
     );
 };
-
-export default AddProductModal;

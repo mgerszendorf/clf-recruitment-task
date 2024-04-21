@@ -20,6 +20,7 @@ type CartEvent =
     | { type: 'COMPLETE_ORDER' }
     | { type: 'GO_BACK_TO_HOME' }
     | { type: 'GO_BACK' }
+    | { type: 'START_NEW_ORDER' }
 
 export const cartMachine = createMachine<CartContext, CartEvent>({
     id: 'cartMachine',
@@ -205,10 +206,26 @@ export const cartMachine = createMachine<CartContext, CartEvent>({
                 },
             },
         },
-
         completed: {
             type: 'final',
-        },
+            entry: assign({
+                cart: (_) => [],
+                address: () => undefined,
+                shipping: () => undefined,
+                payment: () => undefined,
+            }),
+            on: {
+                START_NEW_ORDER: {
+                    target: 'cart',
+                    actions: assign({
+                        cart: (_) => [],
+                        address: (_) => undefined,
+                        shipping: (_) => undefined,
+                        payment: (_) => undefined,
+                    })
+                },
+            },
+        }
     },
 });
 

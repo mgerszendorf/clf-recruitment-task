@@ -24,6 +24,7 @@ interface ICartContext {
     completeOrder: () => void;
     goBack: () => void;
     goBackToHome: () => void;
+    startNewOrder: () => void;
 }
 
 const CartContext = createContext<ICartContext>({} as ICartContext);
@@ -71,6 +72,10 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         send({ type: 'GO_BACK_TO_HOME' });
     };
 
+    const startNewOrder = () => {
+        send({ type: 'START_NEW_ORDER' });
+    };
+
     const value = {
         cart: state.context.cart,
         address: state.context.address,
@@ -86,6 +91,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         completeOrder,
         goBack,
         goBackToHome,
+        startNewOrder,
     };
 
     return (

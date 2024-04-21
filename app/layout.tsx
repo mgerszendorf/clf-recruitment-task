@@ -1,11 +1,9 @@
-import type { Metadata } from "next";
+'use client'
 import '../assets/styles/globales.scss';
 import { CartProvider } from "@/contexts/CartContext";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-export const metadata: Metadata = {
-  title: "CLF - Recruitment task",
-  description: "Recruitment task for the Coraz Lepsza Firma",
-};
+const queryClient = new QueryClient();
 
 export default function RootLayout({
   children,
@@ -15,9 +13,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}>
-        <CartProvider>
-          {children}
-        </CartProvider>
+        <QueryClientProvider client={queryClient}>
+          <CartProvider>
+            {children}
+          </CartProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );
